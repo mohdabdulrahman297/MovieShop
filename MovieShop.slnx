@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="MovieShop.ApplicationCore/MovieShop.ApplicationCore.csproj" />
+  <Project Path="MovieShop.Infrastructure/MovieShop.Infrastructure.csproj" />
+  <Project Path="MovieShopMVC/MovieShopMVC.csproj" />
+</Solution>
