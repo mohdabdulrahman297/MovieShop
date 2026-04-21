@@ -1,10 +1,12 @@
-﻿using System;
+﻿using MovieShop.ApplicationCore.Entities;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace MovieShop.ApplicationCore.Contracts.Repository
 {
-    public interface IMovieRepository
+    public interface IMovieRepository : IRepository<Movie>
     {
+        Task<IEnumerable<Movie>> GetHighestGrossingMovies();
+        Task<Movie?> GetMovieById(int id);
     }
 }

@@ -1,10 +1,20 @@
 ﻿@model MovieShop.ApplicationCore.Models.MovieCardModel
 
-<div class="col-md-3 mb-4">
-    <div class="card h-100">
-        <img src="@Model.PosterUrl" class="card-img-top" alt="@Model.Title" />
-        <div class="card-body">
-            <h5 class="card-title">@Model.Title</h5>
+<div class="col-6 col-md-4 col-lg-3 mb-4">
+    <div class="card movie-card border-0 shadow-sm h-100">
+        <div class="movie-poster-wrapper">
+            <img src="@Model.PosterUrl"
+                 class="card-img-top movie-poster"
+                 alt="@Model.Title" />
+
+            <div class="movie-overlay">
+                <span class="movie-badge">Movie</span>
+                <a href="/Movies/Details/@Model.Id" class="stretched-link" aria-label="View details for @Model.Title"></a>
+            </div>
+        </div>
+
+        <div class="card-body movie-card-body">
+            <h5 class="card-title movie-title mb-0">@Model.Title</h5>
         </div>
     </div>
 </div>

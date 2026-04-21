@@ -1,0 +1,39 @@
+﻿@model MovieShop.ApplicationCore.Models.CastDetailsModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+
+@if (!string.IsNullOrEmpty(Model.ProfilePath))
+{
+    <img src="@Model.ProfilePath" alt="@Model.Name" style="max-width:200px;" />
+}
+
+<p><strong>Department:</strong> @Model.Department</p>
+<p><strong>Gender:</strong> @Model.Gender</p>
+
+@if (!string.IsNullOrEmpty(Model.Biography))
+{
+    <p>@Model.Biography</p>
+}
+
+<h3>Movies</h3>
+@if (Model.Movies != null && Model.Movies.Any())
+{
+    <ul>
+        @foreach (var movie in Model.Movies)
+        {
+            <li>
+                <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
+                    @movie.Title
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No movies found for this cast member.</p>
+}

@@ -1,12 +1,12 @@
 ﻿using MovieShop.ApplicationCore.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace MovieShop.ApplicationCore.Contracts.Services
 {
     public interface IMovieService
     {
-        Task<IEnumerable<MovieCardModel>> GetTopMovies();
+        Task<IEnumerable<MovieCardModel>> GetHighestGrossingMovies();
+        Task<MovieDetailsModel?> GetMovieDetails(int id);
     }
 }

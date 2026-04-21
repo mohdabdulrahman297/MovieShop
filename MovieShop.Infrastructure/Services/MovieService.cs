@@ -1,38 +1,74 @@
-﻿using MovieShop.ApplicationCore.Contracts.Services;
+﻿using MovieShop.ApplicationCore.Contracts.Repository;
+using MovieShop.ApplicationCore.Contracts.Services;
 using MovieShop.ApplicationCore.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MovieShop.Infrastructure.Services
 {
     public class MovieService : IMovieService
     {
-        public async Task<IEnumerable<MovieCardModel>> GetTopMovies()
-        {
-            var movies = new List<MovieCardModel>
-            {
-                new MovieCardModel
-                {
-                    Id = 1,
-                    Title = "Interstellar",
-                    PosterUrl = "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
-                },
-                new MovieCardModel
-                {
-                    Id = 2,
-                    Title = "The Dark Knight",
-                    PosterUrl = "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
-                },
-                new MovieCardModel
-                {
-                    Id = 3,
-                    Title = "Avengers: Endgame",
-                    PosterUrl = "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg"
-                }
-            };
+        private readonly IMovieRepository _movieRepository;
 
-            return await Task.FromResult(movies);
+        public MovieService(IMovieRepository movieRepository)
+        {
+            _movieRepository = movieRepository;
+        }
+
+        public async Task<IEnumerable<MovieCardModel>> GetHighestGrossingMovies()
+        {
+            var movies = await _movieRepository.GetHighestGrossingMovies();
+
+            return movies.Select(m => new MovieCardModel
+            {
+                Id = m.Id,
+                Title = m.Title,
+                PosterUrl = m.PosterUrl
+            });
+        }
+
+        public async Task<MovieDetailsModel> GetMovieDetails(int id)
+        {
+            var movie = await _movieRepository.GetMovieById(id);
+
+            if (movie == null)
+            {
+                return null;
+            }
+
+            return new MovieDetailsModel
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                Overview = movie.Overview,
+                Tagline = movie.Tagline,
+                Budget = movie.Budget,
+                Revenue = movie.Revenue,
+                ImdbUrl = movie.ImdbUrl,
+                TmdbUrl = movie.TmdbUrl,
+                PosterUrl = movie.PosterUrl,
+                BackdropUrl = movie.BackdropUrl,
+                OriginalLanguage = movie.OriginalLanguage,
+                ReleaseDate = movie.ReleaseDate,
+                RunTime = movie.RunTime,
+                Price = movie.Price,
+                
+
+                Genres = movie.MovieGenres.Select(g => new GenreModel
+                {
+                    Id = g.Genre.Id,
+                    Name = g.Genre.Name
+                }).ToList(),
+
+                Casts = movie.MovieCasts.Select(mc => new CastModel
+                {
+                    Id = mc.Cast.Id,
+                    Name = mc.Cast.Name,
+                    Character = mc.Character,
+                    ProfilePath = mc.Cast.ProfilePath
+                }).ToList()
+            };
         }
     }
 }

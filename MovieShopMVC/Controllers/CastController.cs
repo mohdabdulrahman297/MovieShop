@@ -1,12 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieShop.ApplicationCore.Contracts.Services;
+using System.Threading.Tasks;
 
-namespace MovieShopMVC.Controllers
+namespace MovieShop.UI.Controllers
 {
-    public class CastController : Controller
+    public class CastsController : Controller
     {
-        public IActionResult Index()
+        private readonly ICastService _castService;
+
+        public CastsController(ICastService castService)
         {
-            return View();
+            _castService = castService;
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var model = await _castService.GetCastDetails(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
         }
     }
 }
