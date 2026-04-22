@@ -1,5 +1,6 @@
 ﻿using MovieShop.ApplicationCore.Contracts.Repository;
 using MovieShop.ApplicationCore.Contracts.Services;
+using MovieShop.ApplicationCore.Helper;
 using MovieShop.ApplicationCore.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace MovieShop.Infrastructure.Services
             });
         }
 
-        public async Task<MovieDetailsModel> GetMovieDetails(int id)
+        public async Task<MovieDetailsModel?> GetMovieDetails(int id)
         {
             var movie = await _movieRepository.GetMovieById(id);
 
@@ -68,6 +69,26 @@ namespace MovieShop.Infrastructure.Services
                     Character = mc.Character,
                     ProfilePath = mc.Cast.ProfilePath
                 }).ToList()
+            };
+        }
+
+
+        public async Task<Page<MovieCardModel>> GetMoviesByGenre(int genreId, int pageNumber = 1, int pageSize = 30)
+        {
+            // Get paginated Movie entities from repository
+            var moviePage = await _movieRepository.GetMoviesByGenre(genreId, pageNumber, pageSize);
+
+            // Map Page<Movie> → Page<MovieCardModel>
+            return new Page<MovieCardModel>
+            {
+                PageNumber = moviePage.PageNumber,
+                TotalRecords = moviePage.TotalRecords,
+                Data = moviePage.Data.Select(m => new MovieCardModel
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    PosterUrl = m.PosterUrl
+                })
             };
         }
     }

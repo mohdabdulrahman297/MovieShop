@@ -1,0 +1,25 @@
+﻿@using MovieShop.ApplicationCore.Models.Response
+@model IEnumerable<GenreResponse>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-dark"
+           href="#"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+        Genres
+    </a>
+    <ul class="dropdown-menu">
+        @foreach (var genre in Model)
+        {
+            <li>
+                <a class="dropdown-item"
+                       asp-controller="Movies"
+                       asp-action="MoviesByGenre"
+                       asp-route-id="@genre.Id">
+                    @genre.Name
+                </a>
+            </li>
+        }
+    </ul>
+</li>

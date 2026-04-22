@@ -1,0 +1,45 @@
+﻿@using MovieShop.ApplicationCore.Helper
+@using MovieShop.ApplicationCore.Models.Response
+@model Page<GenreResponse>
+
+<h1>Genre List</h1>
+<a asp-action="Create" asp-controller="Genre" class="btn btn-link">Add new Genre</a>
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (GenreResponse item in Model.Data)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <a href="#" class="btn btn-info">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @{
+            int size = Model.TotalRecords / 3;
+            if (Model.TotalRecords % 3 != 0)
+                size = size + 1;
+        }
+        @for (int i = 1; i <= size; i++)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-controller="Genre" asp-route-id="@i">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

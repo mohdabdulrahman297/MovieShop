@@ -29,12 +29,12 @@ namespace MovieShop.Infrastructure.Repository
             return entity;
         }
 
-        public virtual async Task<T> GetById(int id)
+        public virtual async Task<T?> GetById(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> ListAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
             return await _dbContext.Set<T>().ToListAsync();
         }

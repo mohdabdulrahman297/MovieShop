@@ -1,0 +1,75 @@
+﻿@using MovieShop.ApplicationCore.Helper
+@using MovieShop.ApplicationCore.Models
+@model Page<MovieCardModel>
+
+@{
+    ViewData["Title"] = "Movies By Genre";
+    int genreId = ViewBag.GenreId;
+    int totalPages = (int)Math.Ceiling((double)Model.TotalRecords / 30);
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Movies By Genre</h2>
+
+    @* Movie Cards Grid *@
+    <div class="row">
+        @foreach (var movie in Model.Data)
+        {
+            <partial name="_MovieCard" model="movie" />
+        }
+    </div>
+
+    @* Previous / Next Pagination *@
+    @if (totalPages > 1)
+    {
+        <nav aria-label="Movies pagination" class="mt-4">
+            <ul class="pagination justify-content-center">
+
+                @* Previous Button *@
+                <li class="page-item @(Model.PageNumber <= 1 ? "disabled" : "")">
+                    <a class="page-link"
+                           asp-action="MoviesByGenre"
+                           asp-controller="Movies"
+                           asp-route-id="@genreId"
+                           asp-route-pageNumber="@(Model.PageNumber - 1)">
+                        &laquo; Previous
+                    </a>
+                </li>
+
+                @* Page Numbers *@
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link"
+                               asp-action="MoviesByGenre"
+                               asp-controller="Movies"
+                               asp-route-id="@genreId"
+                               asp-route-pageNumber="@i">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                @* Next Button *@
+                <li class="page-item @(Model.PageNumber >= totalPages ? "disabled" : "")">
+                    <a class="page-link"
+                           asp-action="MoviesByGenre"
+                           asp-controller="Movies"
+                           asp-route-id="@genreId"
+                           asp-route-pageNumber="@(Model.PageNumber + 1)">
+                        Next &raquo;
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+        @* Page Info *@
+        <p class="text-center text-muted">
+            Page @Model.PageNumber of @totalPages
+            (@Model.TotalRecords total movies)
+        </p>
+    }
+
+</div>

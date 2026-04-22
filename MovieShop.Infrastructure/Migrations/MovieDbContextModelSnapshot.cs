@@ -17,7 +17,7 @@ namespace MovieShop.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.6")
+                .HasAnnotation("ProductVersion", "10.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -40,7 +40,7 @@ namespace MovieShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Casts");
+                    b.ToTable("Casts", (string)null);
                 });
 
             modelBuilder.Entity("MovieShop.ApplicationCore.Entities.Genre", b =>
@@ -57,7 +57,7 @@ namespace MovieShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("MovieShop.ApplicationCore.Entities.Movie", b =>
@@ -120,7 +120,7 @@ namespace MovieShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("MovieShop.ApplicationCore.Entities.MovieCast", b =>
@@ -137,7 +137,7 @@ namespace MovieShop.Infrastructure.Migrations
 
                     b.HasKey("MovieId", "CastId");
 
-                    b.ToTable("MovieCasts");
+                    b.ToTable("MovieCasts", (string)null);
                 });
 
             modelBuilder.Entity("MovieShop.ApplicationCore.Entities.MovieGenre", b =>
@@ -150,7 +150,7 @@ namespace MovieShop.Infrastructure.Migrations
 
                     b.HasKey("MovieId", "GenreId");
 
-                    b.ToTable("MovieGenres");
+                    b.ToTable("MovieGenres", (string)null);
                 });
 
             modelBuilder.Entity("MovieShop.ApplicationCore.Entities.Trailer", b =>
@@ -176,7 +176,7 @@ namespace MovieShop.Infrastructure.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Trailers");
+                    b.ToTable("Trailers", (string)null);
                 });
 
             modelBuilder.Entity("MovieShop.ApplicationCore.Entities.User", b =>
@@ -237,7 +237,7 @@ namespace MovieShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("MovieShop.ApplicationCore.Entities.Trailer", b =>

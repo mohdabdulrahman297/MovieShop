@@ -30,5 +30,20 @@ namespace MovieShopMVC.Controllers
 
             return View(movie);
         }
+
+        public async Task<IActionResult> MoviesByGenre(int id, int pageNumber = 1, int pageSize = 30)
+        {
+            var movies = await _movieService.GetMoviesByGenre(id, pageNumber, pageSize);
+
+            if (movies == null || movies.TotalRecords == 0)
+            {
+                return Content("No movies found for this genre");
+            }
+
+            // Pass genreId to view for pagination links
+            ViewBag.GenreId = id;
+
+            return View(movies);
+        }
     }
 }
