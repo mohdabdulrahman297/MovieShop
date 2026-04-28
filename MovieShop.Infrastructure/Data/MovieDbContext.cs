@@ -25,6 +25,10 @@ namespace MovieShop.Infrastructure.Data
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -58,6 +62,19 @@ namespace MovieShop.Infrastructure.Data
                 entity.Property(u => u.HashedPassword).HasMaxLength(1024).IsRequired();
                 entity.Property(u => u.Salt).HasMaxLength(1024).IsRequired();
                 entity.Property(u => u.PhoneNumber).HasMaxLength(32);
+            });
+
+
+            modelBuilder.Entity<Review>(entity =>
+            {
+                entity.HasKey(r => new { r.UserId, r.MovieId }); // composite PK
+                entity.Property(r => r.Rating).HasPrecision(4, 2); // e.g. 9.99
+            });
+
+
+            modelBuilder.Entity<Purchase>(entity =>
+            {
+                entity.Property(p => p.TotalPrice).HasPrecision(18, 2);
             });
         }
 

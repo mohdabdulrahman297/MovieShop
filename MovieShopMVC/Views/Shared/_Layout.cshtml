@@ -28,6 +28,52 @@
                             @await Component.InvokeAsync("Genres")
                         </li>
                     </ul>
+
+                    
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                    👤 @User.FindFirst(System.Security.Claims.ClaimTypes.GivenName)?.Value
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Movies" asp-action="Index">
+                                            🎬 Movies
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="User" asp-action="Favorites">
+                                            ⭐ Favorites
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" asp-controller="Account" asp-action="Logout">
+                                            🚪 Log Out
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="User" asp-action="Purchases">
+                                            🛒 Purchases
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item me-2">
+                                <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary btn-sm">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Account" asp-action="Register" class="btn btn-success btn-sm">Register</a>
+                            </li>
+                        }
+                    </ul>
+
                 </div>
             </div>
         </nav>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MovieShop.ApplicationCore.Models.FavoriteModel>
+@{
+    ViewData["Title"] = "My Favorites";
+}
+
+<h2 class="mb-4">⭐ My Favorites</h2>
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <p class="text-muted fs-5">You haven't added any favorites yet.</p>
+        <a asp-controller="Movies" asp-action="Index" class="btn btn-primary mt-2">
+            Browse Movies
+        </a>
+    </div>
+}
+else
+{
+    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+        @foreach (var movie in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">
+                        <img src="@movie.PosterUrl"
+                             class="card-img-top"
+                             alt="@movie.Title"
+                             style="height: 250px; object-fit: cover;"
+                             onerror="this.src='/images/no-poster.jpg'" />
+                    </a>
+                    <div class="card-body p-2 text-center">
+                        <p class="card-text small fw-bold mb-1">@movie.Title</p>
+                        <form asp-controller="User" asp-action="RemoveFavorite" method="post">
+                            <input type="hidden" name="movieId" value="@movie.MovieId" />
+                            <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                ❌ Remove
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

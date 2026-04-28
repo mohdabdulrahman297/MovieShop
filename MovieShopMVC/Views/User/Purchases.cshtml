@@ -1,0 +1,62 @@
+﻿@model IEnumerable<MovieShop.ApplicationCore.Models.PurchaseModel>
+@{
+    ViewData["Title"] = "My Purchases";
+}
+
+<h2 class="mb-4">🛒 My Purchases</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <p class="text-muted fs-5">You haven't purchased any movies yet.</p>
+        <a asp-controller="Movies" asp-action="Index" class="btn btn-primary mt-2">
+            Browse Movies
+        </a>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var purchase in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <img src="@purchase.PosterUrl"
+                                 class="img-fluid rounded-start"
+                                 alt="@purchase.Title"
+                                 style="height: 150px; object-fit: cover;"
+                                 onerror="this.src='/images/no-poster.jpg'" />
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body">
+                                <h6 class="card-title fw-bold">@purchase.Title</h6>
+                                <p class="card-text small text-muted mb-1">
+                                    📅 @purchase.PurchaseDateTime.ToShortDateString()
+                                </p>
+                                <p class="card-text small text-muted mb-1">
+                                    💵 $@purchase.TotalPrice.ToString("0.00")
+                                </p>
+                                <p class="card-text" style="font-size:0.7rem; color:#aaa;">
+                                    #@purchase.PurchaseNumber.ToString()[..8]
+                                </p>
+                                <a asp-controller="Movies"
+                                       asp-action="Details"
+                                       asp-route-id="@purchase.MovieId"
+                                       class="btn btn-sm btn-outline-primary">
+                                    View Movie
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
