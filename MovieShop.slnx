@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="MovieShop.ApplicationCore/MovieShop.ApplicationCore.csproj" />
   <Project Path="MovieShop.Infrastructure/MovieShop.Infrastructure.csproj" />
+  <Project Path="MovieShopMVC.API/MovieShopMVC.API.csproj" Id="54dd2914-590b-4771-9b35-e0df6c536bfb" />
   <Project Path="MovieShopMVC/MovieShopMVC.csproj" />
 </Solution>
