@@ -1,9 +1,8 @@
-@"
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 COPY ["MovieShopMVC.API/MovieShopMVC.API.csproj", "MovieShopMVC.API/"]
 COPY ["MovieShop.ApplicationCore/MovieShop.ApplicationCore.csproj", "MovieShop.ApplicationCore/"]
@@ -20,4 +19,3 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "MovieShopMVC.API.dll"]
-"@ | Set-Content -Path "Dockerfile" -Encoding UTF8

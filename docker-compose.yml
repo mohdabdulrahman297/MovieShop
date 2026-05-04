@@ -1,0 +1,10 @@
+﻿services:
+  movieshop-api:
+    build:
+      context: .
+      dockerfile: MovieShopMVC.API/Dockerfile
+    ports:
+      - "7100:8080"
+    environment:
+      - ConnectionStrings__MovieShopDbConnection=Server=tcp:movieshopdb.database.windows.net,1433;Initial Catalog=moviedb;Persist Security Info=False;User ID=Mohammed;Password=Peskonami@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+      - ASPNETCORE_ENVIRONMENT=Development
